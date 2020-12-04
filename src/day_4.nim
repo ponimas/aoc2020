@@ -1,5 +1,4 @@
-import streams, strformat, sets, strutils, re, algorithm, sequtils, tables
-
+import streams, sets, strutils, re
 
 proc validate(passData: seq[string]): bool =
   let
@@ -54,26 +53,16 @@ proc validate(passData: seq[string]): bool =
 proc fourthDay*(stream: FileStream) =
   var
     line = ""
-    valid = newSeq[string]()
+    valid = 0
     passData: seq[string]
     
   while stream.readLine(line):
     if line == "":
-      sort(passData)
-      if validate(passData):
-        valid.add(join(passData, " "))
-        
+      if validate(passData): inc valid
       passData = @[]
       continue
     else:
       for field in strutils.splitWhitespace(line):
-        # if field[0 .. 2] != "cid":
         passData.add(field)
 
-  # proc myCmp(x, y: seq[string]): int =
-  #   let idx = 6
-  #   return system.cmp[string](x[idx], y[idx])
-  # sort(valid, myCmp)
-  sort(valid)
-  for x in valid:
-    echo fmt"{x}"
+  echo valid
