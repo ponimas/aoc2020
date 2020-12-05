@@ -1,6 +1,6 @@
 import parseopt, streams
 
-import day_1, day_2, day_3, day_4
+import day_5
 
 when isMainModule:
   var parser = parseopt.initOptParser()
@@ -8,4 +8,4 @@ when isMainModule:
   let filename = parser.key
   let strm = newFileStream(filename, fmRead)
 
-  fourthDay(strm)
+  fifthDay(strm)
