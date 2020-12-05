@@ -7,12 +7,12 @@ proc validate(passData: seq[string]): bool =
     hclRx = re"^\#[a-f0-9]{6}$"
     pidRx = re"^\d{9}$"
 
-  var required = toHashSet(["byr", "iyr", "eyr", "hgt","hcl", "ecl", "pid"])
-  
+  var required = toHashSet(["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"])
+
   for field in passData:
 
     let data = field[4 .. len(field) - 1]
-    
+
     case field[0 .. 2]:
       of "byr":
         let yr = parseInt(data)
@@ -34,13 +34,13 @@ proc validate(passData: seq[string]): bool =
           if h > 193 or h < 150: return false
         else:
           if h > 76 or h < 59: return false
-        
+
       of "hcl":
-        if not match(data, hclRx):   return false
+        if not match(data, hclRx): return false
 
       of "ecl":
         if not eyes.contains(data): return false
-      
+
       of "pid":
         if not match(data, pidRx): return false
 
@@ -48,14 +48,14 @@ proc validate(passData: seq[string]): bool =
         continue
     required.excl(field[0 .. 2])
 
-  return  len(required) == 0
+  return len(required) == 0
 
 proc fourthDay*(stream: FileStream) =
   var
     line = ""
     valid = 0
     passData: seq[string]
-    
+
   while stream.readLine(line):
     if line == "":
       if validate(passData): inc valid

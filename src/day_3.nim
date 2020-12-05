@@ -10,7 +10,7 @@ proc thirdDay*(fileStream: FileStream) =
     xs: array[5, int]
 
   let moves = [[1, 1], [3, 1], [5, 1], [7, 1], [1, 2]]
-  
+
   while fileStream.readLine(line):
     for ix, move in moves:
       if y mod move[1] != 0: continue

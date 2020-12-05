@@ -26,7 +26,7 @@ proc fifthDay*(stream: FileStream) =
         row = row_l
 
       # echo fmt"{r=} {row_l=} {row_h=} {row=}"
-        
+
     for s in line[7 .. 9]:
       if s == 'R':
         seat_l = seat_l + (seat_h - seat_l) div 2 + 1
@@ -34,28 +34,26 @@ proc fifthDay*(stream: FileStream) =
       else:
         seat_h = seat_h - (seat_h - seat_l) div 2 - 1
         seat = seat_l
-        
+
       # echo fmt"{s=} {seat_l=} {seat_h=} {seat=}"
-      
+
     let id = row * 8 + seat
     occupied.add(id)
-    
+
     echo fmt"{line} {row=} {seat=} {id=}"
-    
+
     if max < id: max = id
 
   sort(occupied)
 
-  let 
+  let
     maxId = occupied[high(occupied)]
     minId = occupied[0]
 
   var
-    mine = (maxId * (maxId + 1)  - (minId - 1) * minId) div 2
-      
+    mine = (maxId * (maxId + 1) - (minId - 1) * minId) div 2
+
   for id in occupied:
     mine = mine - id
-    
-  echo fmt"{max=}, {mine=}"
 
-    
+  echo fmt"{max=}, {mine=}"
