@@ -1,7 +1,7 @@
 import streams, algorithm
 from strformat import fmt
 
-proc fifthDay*(stream: FileStream) =
+proc solution*(stream: FileStream) =
   var
     line = ""
     max = 0

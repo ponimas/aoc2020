@@ -50,7 +50,7 @@ proc validate(passData: seq[string]): bool =
 
   return len(required) == 0
 
-proc fourthDay*(stream: FileStream) =
+proc solution*(stream: FileStream) =
   var
     line = ""
     valid = 0

@@ -5,7 +5,7 @@ import streams
 from strutils import parseInt, split
 from algorithm import sort
 
-proc firstDay*(strm: FileStream) =
+proc solution*(strm: FileStream) =
   var ints = newSeq[int]()
   var line = ""
 

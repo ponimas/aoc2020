@@ -3,7 +3,7 @@ from strformat import fmt
 import re, streams, sequtils
 from strutils import parseInt
 
-proc secondDay*(fileStrm: FileStream) =
+proc solution*(fileStrm: FileStream) =
   let rx = re"(\d+)-(\d+)\s(\w):\s(\w+)"
 
   var
