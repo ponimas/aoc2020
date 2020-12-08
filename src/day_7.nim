@@ -15,17 +15,17 @@ proc solution*(stream: FileStream) =
       inners = ""
       num = ""
       color = ""
-      
-    (outer, inners) = split(line, " bags contain ", maxsplit=1)
+
+    (outer, inners) = split(line, " bags contain ", maxsplit = 1)
 
     if not graph.hasKey(outer): graph[outer] = @[]
-    
+
     for match in re.split(inners, rx):
 
-      if match in ["", "no other"]:         break
+      if match in ["", "no other"]: break
 
-      (num, color) = splitWhitespace(match, maxsplit=1)
-      
+      (num, color) = splitWhitespace(match, maxsplit = 1)
+
       if not revGraph.hasKey(color): revGraph[color] = @[]
 
       revGraph[color].add(outer)
@@ -34,13 +34,13 @@ proc solution*(stream: FileStream) =
   var
     visited = initHashSet[string]()
     v = "shiny gold"
-    stack= revGraph[v]
-  
+    stack = revGraph[v]
+
   while len(stack) > 0:
     v = stack.pop()
     if visited.containsOrIncl(v): continue
     stack &= revGraph.getOrDefault(v)
-    
+
   echo fmt"first = {len(visited)}"
 
   proc count(v: string): int =
