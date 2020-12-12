@@ -30,7 +30,7 @@ proc second(data: seq[int]): int =
     for j in i + 1 .. min(i + 3, high(data)):
       if data[j] - data[i] <= 3:
         track[j] += track[i]
-        
+
   return track[high(track)]
 
 
