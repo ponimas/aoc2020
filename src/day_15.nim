@@ -1,4 +1,4 @@
-import re, streams, strutils, sequtils, lists, bitops, tables, sugar, math, unicode
+import streams, strutils, sequtils, tables, sugar
 from strformat import fmt
 
 proc game(input: seq[int], step: int): int =
