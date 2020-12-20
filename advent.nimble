@@ -11,3 +11,5 @@ bin           = @["advent"]
 # Dependencies
 
 requires "nim >= 1.4.0"
+requires "unpack >= 0.4.0"
+requires "memo >= 0.3.0"
