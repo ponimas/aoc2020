@@ -1,6 +1,6 @@
 import parseopt, streams
 
-import day_22
+import day_23
 
 when isMainModule:
   var parser = parseopt.initOptParser()
