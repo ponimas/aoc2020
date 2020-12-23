@@ -13,22 +13,22 @@ type
     next: int
   TableList = Table[int, Node]
 
-proc `$`(data: TableList): string =
+proc `$`(data: seq[Node]): string =
   var p = 1
   let l = collect(newSeq):
-    for _ in data.keys():
+    for _ in 0 .. high(data) - 1:
       let pp = p
       p = data[p].next
       pp
   fmt"{l}"
 
 proc solve(input: seq[int], moves: int = 10): seq[int] =
-  var data: TableList = collect(initTable(1000)):
-    for (i, v) in zip(toSeq(1 .. high(input)), input[1 .. ^1]):
-      let node: Node = (input[i - 1], input[(i + 1) mod len(input)])
-      {v: node}
+  var data = newSeq[Node](len(input) + 1) # data[0] should be never touched
+  for (i, v) in zip(toSeq(1 .. high(input)-1), input[1 .. ^2]):
+    data[v] = (input[i-1], input[i+1])
 
   data[input[0]] = (input[^1], input[1])
+  data[input[^1]] = (input[^2], input[0])
 
   let minVal = input[input.minIndex()]
   let maxVal = input[input.maxIndex()]
@@ -38,14 +38,14 @@ proc solve(input: seq[int], moves: int = 10): seq[int] =
   for move in 1 .. moves:
     if moves <= 100:
       echo data
-      
+
     var p = data[current]
     let selected = collect(newSeq):
       for _ in 1 .. 3:
         let pp = p.next
         p = data[pp]
         pp
-        
+
     data[current].next = p.next
 
     var dest = current
