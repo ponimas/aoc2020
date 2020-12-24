@@ -4,6 +4,9 @@ import sequtils
 import streams
 import strutils
 import tables
+
+import memo
+
 from strformat import fmt
 
 # https://www.redblobgames.com/grids/hexagons/#coordinates-cube
@@ -38,7 +41,7 @@ proc find(steps: seq[string]): Tile =
         inc loc.y
   loc
 
-proc neighbours(t: Tile): Hashset[Tile] =
+proc neighbours(t: Tile): Hashset[Tile] {.memoized.} =
   toHashSet(@[
     (t.x - 1, t.y + 1, t.z),
     (t.x + 1, t.y - 1, t.z),
@@ -61,11 +64,11 @@ proc day(blackTiles: Hashset[Tile]): Hashset[Tile] =
   var flipToBlack: Hashset[Tile]
   var tmp: seq[Tile]
 
-
   for tile in blackTiles:
-    if len(neighbours(tile) * blackTiles) > 2:
+    let intersection = neighbours(tile) * blackTiles
+    if len(intersection) > 2:
       flipToWhite.incl(tile)
-    if len(neighbours(tile) * blackTiles) == 0:
+    if len(intersection) == 0:
       flipToWhite.incl(tile)
     for n in (neighbours(tile) - blackTiles):
       tmp.add(n)
