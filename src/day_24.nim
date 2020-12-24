@@ -6,10 +6,11 @@ import strutils
 import tables
 from strformat import fmt
 
-
+# https://www.redblobgames.com/grids/hexagons/#coordinates-cube
 type Tile = tuple
   x: int
   y: int
+  z: int
 
 let tileRx = re"(se)|(sw)|(nw)|(ne)|(e)|(w)"
 
@@ -18,31 +19,33 @@ proc find(steps: seq[string]): Tile =
   for step in steps:
     case step:
       of "e":
-        loc.x += 2
+        inc loc.x
+        dec loc.y
       of "w":
-        loc.x -= 2
+        dec loc.x
+        inc loc.y
       of "se":
-        inc loc.x
-        inc loc.y
+        inc loc.z
+        dec loc.y
       of "sw":
+        inc loc.z
         dec loc.x
-        inc loc.y
       of "ne":
+        dec loc.z
         inc loc.x
-        dec loc.y
       of "nw":
-        dec loc.x
-        dec loc.y
+        dec loc.z
+        inc loc.y
   loc
 
 proc neighbours(t: Tile): Hashset[Tile] =
   toHashSet(@[
-    (t.x + 2, t.y),
-    (t.x - 2, t.y),
-    (t.x + 1, t.y + 1),
-    (t.x - 1, t.y + 1),
-    (t.x + 1, t.y - 1),
-    (t.x - 1, t.y - 1)
+    (t.x - 1, t.y + 1, t.z),
+    (t.x + 1, t.y - 1, t.z),
+    (t.x, t.y - 1, t.z + 1),
+    (t.x, t.y + 1, t.z - 1),
+    (t.x - 1, t.y, t.z + 1),
+    (t.x + 1, t.y, t.z - 1),
   ])
 
 proc init(tiles: seq[seq[string]]): Hashset[Tile] =
